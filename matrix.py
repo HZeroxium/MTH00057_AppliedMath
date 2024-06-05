@@ -142,6 +142,32 @@ class Matrix:
         for k in range(self.rows):
             self.data[k][i], self.data[k][j] = self.data[k][j], self.data[k][i]
 
+    def attach_matrix_horizontal(self: "Matrix", other: "Matrix") -> "Matrix":
+        if self.rows != other.rows:
+            raise ValueError("Matrices must have the same number of rows")
+        new_data = [self.data[i] + other.data[i] for i in range(self.rows)]
+        return Matrix(new_data)
+
+    def separate_matrix_horizontal(
+        self: "Matrix", index: int
+    ) -> tuple["Matrix", "Matrix"]:
+        new_data1 = [self.data[i][:index] for i in range(self.rows)]
+        new_data2 = [self.data[i][index:] for i in range(self.rows)]
+        return Matrix(new_data1), Matrix(new_data2)
+
+    def is_identity(self: "Matrix") -> bool:
+        if self.rows != self.columns:
+            return False
+        for i in range(self.rows):
+            for j in range(self.columns):
+                if i == j:
+                    if self.data[i][j] != 1.0:
+                        return False
+                else:
+                    if self.data[i][j] != 0.0:
+                        return False
+        return True
+
     def Guass_Jordan(self: "Matrix") -> "Matrix":
         for i in range(self.rows):
             if self.data[i][i] == 0:
@@ -278,3 +304,35 @@ def back_substitution(matrix: Matrix) -> list:
 
     print(">>> Hệ phương trình có vô số nghiệm")
     return sol
+
+
+def get_identity_matrix(n: int) -> Matrix:
+    data = [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+    return Matrix(data)
+
+
+def inverse(A: Matrix) -> Matrix:
+    """
+    Find the inverse of a square matrix using the Gauss-Jordan method.
+
+    Args:
+        A (Matrix): The matrix to find the inverse of.
+
+    Returns:
+        Matrix: The inverse of the input matrix A.
+    """
+    if A.rows != A.columns:
+        raise ValueError("The input matrix must be square")
+
+    n = A.rows
+    I = get_identity_matrix(n)
+    augmented_matrix = A.attach_matrix_horizontal(I)
+    reduced_matrix = augmented_matrix.Guass_Jordan()
+    _, inverse_matrix = reduced_matrix.separate_matrix_horizontal(n)
+
+    if not _.is_identity():
+        return None
+    return inverse_matrix
+
+
+
