@@ -1,5 +1,5 @@
 import cmath
-
+import numpy as np  # type: ignore
 from matrix import (
     Matrix,
     get_identity_matrix,
@@ -98,7 +98,7 @@ def get_characteristic_polynomial(matrix: Matrix) -> list:
         )
 
 
-def solve_characteristic_polynomial(matrix: Matrix) -> list:
+def find_eigenvalues(matrix: Matrix) -> list:
     if not matrix.is_square():
         raise ValueError("Matrix must be square to have a characteristic polynomial.")
 
@@ -151,7 +151,7 @@ def find_eigenvectors(matrix: Matrix, eigenvalues: list) -> list:
 
 
 def diagonalize_matrix(matrix: Matrix) -> tuple[Matrix, Matrix, Matrix, bool]:
-    eigenvalues = format_solution(solve_characteristic_polynomial(matrix))
+    eigenvalues = format_solution(find_eigenvalues(matrix))
     # print("Trị riêng:", eigenvalues)
     eigenvectors = find_eigenvectors(matrix, eigenvalues)
     # print("Vector riêng:", eigenvectors)
@@ -163,35 +163,75 @@ def diagonalize_matrix(matrix: Matrix) -> tuple[Matrix, Matrix, Matrix, bool]:
     return matrix_P, matrix_D, inverse(matrix_P), True
 
 
-matrices: list[Matrix] = [
-    Matrix([[-1, 3], [-2, 4]]),
-    Matrix([[5, 2], [9, 2]]),
-    Matrix([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
-    Matrix([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
-    Matrix([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
-    Matrix([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
-    Matrix([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
-    Matrix([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
-    Matrix([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
-    Matrix([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
-]
+def main():
+    matrices: list[Matrix] = [
+        Matrix([[-1, 3], [-2, 4]]),
+        Matrix([[5, 2], [9, 2]]),
+        Matrix([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
+        Matrix([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
+        Matrix([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
+        Matrix([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
+        Matrix([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
+        Matrix([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
+        Matrix([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
+        Matrix([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
+    ]
 
-n = len(matrices)
+    n = len(matrices)
 
-for i in range(n):
-    print(f"*** Ma trận câu", chr(ord("a") + i), ":")
-    print(matrices[i])
-    matrix_P, matrix_D, matrix_P_inv, is_diagonalizable = diagonalize_matrix(
-        matrices[i]
-    )
-    if not is_diagonalizable:
-        print("Không thể chéo hóa ma trận.")
+    for i in range(n):
+        print(f"*** Ma trận câu", chr(ord("a") + i), ":")
+        print(matrices[i])
+        matrix_P, matrix_D, matrix_P_inv, is_diagonalizable = diagonalize_matrix(
+            matrices[i]
+        )
+        if not is_diagonalizable:
+            print("Không thể chéo hóa ma trận.")
+            print("=" * 50)
+            continue
+        print("--> Matrix P:")
+        print(matrix_P)
+        print("--> Matrix P^-1:")
+        print(matrix_P_inv)
+        print("--> Matrix D:")
+        print(matrix_D)
         print("=" * 50)
-        continue
-    print("Matrix P:")
-    print(matrix_P)
-    print("Matrix D:")
-    print(matrix_D)
-    print("Matrix P^-1:")
-    print(matrix_P_inv)
-    print("=" * 50)
+
+    matrices_np: list[np.ndarray] = [
+        np.array([[-1, 3], [-2, 4]]),
+        np.array([[5, 2], [9, 2]]),
+        np.array([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
+        np.array([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
+        np.array([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
+        np.array([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
+        np.array([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
+        np.array([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
+        np.array([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
+        np.array([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
+    ]
+
+    n = len(matrices_np)
+
+    for i in range(n):
+        print(f"*** Ma trận câu", chr(ord("a") + i), ":")
+        print(matrices_np[i])
+        eigenvalues, eigenvectors = np.linalg.eig(matrices_np[i])
+        print("--> Trị riêng:")
+        print(eigenvalues)
+        print("--> Vector riêng:")
+        print(eigenvectors)
+
+        D = np.diag(eigenvalues)
+        P = eigenvectors
+        P_inv = np.linalg.inv(P)
+        print("--> Ma trận P:")
+        print(P)
+        print("--> Ma trận P^-1:")
+        print(P_inv)
+        print("--> Ma trận D:")
+        print(D)
+        print("=" * 50)
+
+
+if __name__ == "__main__":
+    main()
