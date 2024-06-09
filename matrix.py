@@ -45,24 +45,27 @@ class Matrix:
             )
         return Matrix(new_data)
 
-    def __mul__(self, other) -> "Matrix":
-        if self.columns != other.rows:
-            raise ValueError(
-                "The number of columns in the first matrix must be equal to the number of rows in the second matrix"
-            )
+    def __mul__(self, other: "Matrix") -> "Matrix":
         new_data = []
-        for i in range(self.rows):
-            new_data.append(
-                [
-                    sum(
-                        [
-                            self.data[i][k] * other.data[k][j]
-                            for k in range(self.columns)
-                        ]
-                    )
-                    for j in range(other.columns)
-                ]
-            )
+        if type(other) == Matrix:
+            if self.columns != other.rows:
+                raise ValueError(
+                    "The number of columns in the first matrix must be equal to the number of rows in the second matrix"
+                )
+            for i in range(self.rows):
+                new_data.append(
+                    [
+                        sum(
+                            [
+                                self.data[i][k] * other.data[k][j]
+                                for k in range(self.columns)
+                            ]
+                        )
+                        for j in range(other.columns)
+                    ]
+                )
+        elif type(other) == int or type(other) == float:
+            new_data = [[x * other for x in row] for row in self.data]
         return Matrix(new_data)
 
     def getColumn(self: "Matrix", index: int) -> list:
@@ -197,15 +200,25 @@ class Matrix:
     def getNullity(self: "Matrix") -> int:
         return self.columns - self.getRank()
 
-    def format(self: "Matrix") -> None:
-        new_data = []
+    def format(self: "Matrix") -> "Matrix":
         for i in range(self.rows):
             for j in range(self.columns):
+                if type(self.data[i][j]) == int:
+                    self.data[i][j] = float(self.data[i][j])
                 if abs(self.data[i][j]) < 1e-10:
                     self.data[i][j] = 0
                 if self.data[i][j] == -0.0:
                     self.data[i][j] = 0.0
-                self.data[i][j] = round(self.data[i][j], 10)
+                self.data[i][j] = round(self.data[i][j], 2)
+        return self
+
+    def trace(self: "Matrix") -> float:
+        if self.rows != self.columns:
+            raise ValueError("The matrix must be square")
+        return sum([self.data[i][i] for i in range(self.rows)])
+
+    def is_square(self: "Matrix") -> bool:
+        return self.rows == self.columns
 
 
 def Gauss_elimination(matrix: "Matrix") -> "Matrix":
@@ -256,7 +269,7 @@ def back_substitution(matrix: Matrix) -> list:
     rankA_ = matrix.getRank()
 
     if rankA < rankA_:
-        print(">>> Hệ phương trình vô nghiệm")
+        # print(">>> Hệ phương trình vô nghiệm")
         return []
 
     n = matrix.columns - 1
@@ -280,9 +293,10 @@ def back_substitution(matrix: Matrix) -> list:
             if i <= n:
                 free_variables.append(i)
 
+    rankA_ = matrix.getRank()
     # Unique solution
     if rankA == rankA_ and rankA == n:
-        print(">>> Hệ phương trình có nghiệm duy nhất")
+        # print(">>> Hệ phương trình có nghiệm duy nhất")
         return [matrix[i][n] for i in range(n)]
 
     # Infinite solutions
@@ -302,7 +316,7 @@ def back_substitution(matrix: Matrix) -> list:
                 temp[j] = -matrix.data[j][i]
         sol.append(temp)
 
-    print(">>> Hệ phương trình có vô số nghiệm")
+    # print(">>> Hệ phương trình có vô số nghiệm")
     return sol
 
 
@@ -333,6 +347,3 @@ def inverse(A: Matrix) -> Matrix:
     if not _.is_identity():
         return None
     return inverse_matrix
-
-
-

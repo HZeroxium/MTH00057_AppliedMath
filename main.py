@@ -19,37 +19,40 @@ def roundSol(solution: list, n: int) -> list:
 
 
 def main():
-    # matrix_a: "Matrix" = Matrix([[1, 1, 2], [2, -1, 1], [-2, 4, 1]])
-    # matrix_b: "Matrix" = Matrix([[1, 1, 1], [2, -2, 2], [1, 1, -1]])
-    # matrix_c: "Matrix" = Matrix([[1, 1, -1], [0, 1, 2], [1, 1, 1]])
-    # matrix_d = Matrix([[-1, -1, 1], [1, 3, 3], [-1, -1, 5], [1, 3, 7]])
-    # matrix_e = Matrix([[1, 1, 1], [2, 2, 0], [3, 0, 0], [0, 0, 1]])
-    # matrix_f = Matrix([[-2, 1, 3], [1, 0, 0], [0, 1, 0], [0, 0, 1]])
-    # matrix_g = Matrix([[1, -1, 2], [1, 0, -1], [-1, 1, 2], [0, 1, 1]])
+    matrix_a: "Matrix" = Matrix([[1, 1, 2], [2, -1, 1], [-2, 4, 1]])
+    matrix_b: "Matrix" = Matrix([[1, 1, 1], [2, -2, 2], [1, 1, -1]])
+    matrix_c: "Matrix" = Matrix([[1, 1, -1], [0, 1, 2], [1, 1, 1]])
+    matrix_d = Matrix([[-1, -1, 1], [1, 3, 3], [-1, -1, 5], [1, 3, 7]])
+    matrix_e = Matrix([[1, 1, 1], [2, 2, 0], [3, 0, 0], [0, 0, 1]])
+    matrix_f = Matrix([[-2, 1, 3], [1, 0, 0], [0, 1, 0], [0, 0, 1]])
+    matrix_g = Matrix([[1, -1, 2], [1, 0, -1], [-1, 1, 2], [0, 1, 1]])
+    matrix_h = Matrix([[1, 1, 1, 1], [0, 1, 1, 1], [0, 0, 1, 1]])
 
-    # vectors = [Vector(v) for v in matrix_f.transpose().data]
-    # vectors = gram_schmidt(vectors)
+    matrix_h = matrix_h.transpose()
 
-    # print("Orthonormal basis:")
-    # for v in vectors:
-    #     print(v)
+    vectors = [Vector(v) for v in matrix_h.transpose().data]
+    vectors = gram_schmidt(vectors)
 
-    # unitize_vectors = [v.unitize() for v in vectors]
-    # print("\nUnit vectors:")
-    # for v in unitize_vectors:
-    #     print(v)
+    print("Orthonormal basis:")
+    for v in vectors:
+        print(v)
 
-    # matrix_q = Matrix([v.data for v in unitize_vectors]).transpose()
-    # print("\nMatrix Q:")
-    # print(matrix_q)
+    unitize_vectors = [v.unitize() for v in vectors]
+    print("\nUnit vectors:")
+    for v in unitize_vectors:
+        print(v)
 
-    # for i in range(len(unitize_vectors)):
-    #     for j in range(i, len(unitize_vectors)):
-    #         temp = round(unitize_vectors[i].calDotProduct(unitize_vectors[j]), 2)
-    #         print("<q" + str(i + 1) + ", u" + str(j + 1) + "> = ", end="")
-    #         print(temp)
+    matrix_q = Matrix([v.data for v in unitize_vectors]).transpose()
+    print("\nMatrix Q:")
+    print(matrix_q)
 
-    ##############################
+    for i in range(len(unitize_vectors)):
+        for j in range(i, len(unitize_vectors)):
+            temp = round(unitize_vectors[i].calDotProduct(unitize_vectors[j]), 2)
+            print("<q" + str(i + 1) + ", u" + str(j + 1) + "> = ", end="")
+            print(temp)
+
+    #############################
 
     # matrices: list[Matrix] = [
     #     Matrix([[1, 2, -1], [2, 2, 1], [3, 5, -2]]),
@@ -114,25 +117,25 @@ def main():
 
     ##############################
 
-    matrices: list[Matrix] = [
-        Matrix([[1, 2, 1], [3, 7, 3], [2, 3, 4]]),
-        Matrix([[1, -1, 2], [1, 1, -2], [1, 1, 4]]),
-        Matrix([[1, 2, 3], [2, 5, 3], [1, 0, 8]]),
-        Matrix([[-1, 3, -4], [2, 4, 1], [-4, 2, -9]]),
-    ]
+    # matrices: list[Matrix] = [
+    #     Matrix([[1, 2, 1], [3, 7, 3], [2, 3, 4]]),
+    #     Matrix([[1, -1, 2], [1, 1, -2], [1, 1, 4]]),
+    #     Matrix([[1, 2, 3], [2, 5, 3], [1, 0, 8]]),
+    #     Matrix([[-1, 3, -4], [2, 4, 1], [-4, 2, -9]]),
+    # ]
 
-    n = len(matrices)
+    # n = len(matrices)
 
-    for i in range(n):
-        print("*** Ma trận câu " + str(i + 1) + ":")
-        print(matrices[i])
+    # for i in range(n):
+    #     print("*** Ma trận câu " + str(i + 1) + ":")
+    #     print(matrices[i])
 
-        print(">>> Ma trận nghịch đảo tương ứng:")
-        res = inverse(matrices[i])
-        if res is not None:
-            print(res)
-        else:
-            print("!!! Ma trận không khả nghịch")
+    #     print(">>> Ma trận nghịch đảo tương ứng:")
+    #     res = inverse(matrices[i])
+    #     if res is not None:
+    #         print(res)
+    #     else:
+    #         print("!!! Ma trận không khả nghịch")
 
 
 if __name__ == "__main__":

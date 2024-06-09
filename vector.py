@@ -35,6 +35,9 @@ class Vector:
     def unitize(self) -> "Vector":
         return self.scale(1 / self.magnitude())
 
+    def __iter__(self):
+        return iter(self.data)
+
 
 def gram_schmidt(vectors: list[Vector]) -> list[Vector]:
     basis: list[Vector] = []
