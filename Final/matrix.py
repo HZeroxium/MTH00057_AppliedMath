@@ -220,6 +220,9 @@ class Matrix:
     def is_square(self: "Matrix") -> bool:
         return self.rows == self.columns
 
+    def setValue(self: "Matrix", i: int, j: int, value: float) -> None:
+        self.data[i][j] = value
+
 
 def Gauss_elimination(matrix: "Matrix") -> "Matrix":
     """

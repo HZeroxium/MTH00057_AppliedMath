@@ -7484,7 +7484,7 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 align="center">Toán ứng dụng và thống kê</h1>
 <h2 align="center">Đồ án Gram - Schmidt</h2>
-<h3 align="center">Ngày 18/06/2024</h3>
+<h3 align="center">Ngày 12/06/2024</h3>
 <h1 id="1.-Th%C3%B4ng-tin-sinh-vi%C3%AAn">1. Thông tin sinh viên<a class="anchor-link" href="#1.-Th%C3%B4ng-tin-sinh-vi%C3%AAn">¶</a></h1><ul>
 <li>Họ và tên: Nguyễn Gia Huy</li>
 <li>MSSV: 22127154</li>
@@ -8260,7 +8260,41 @@ $$ A = QR $$<h3 id="2.2.2-Quy-tr%C3%ACnh">2.2.2 Quy trình<a class="anchor-link"
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="4.-T%E1%BB%95ng-k%E1%BA%BFt">4. Tổng kết<a class="anchor-link" href="#4.-T%E1%BB%95ng-k%E1%BA%BFt">¶</a></h1><p>Trong đồ án này, em đã trình bày về giải thuật Gram-Schmidt và phân rã QR. Em đã cài đặt giải thuật này bằng cả hai cách: không sử dụng thư viện và sử dụng thư viện <code>numpy</code>. Kết quả của cả hai cách cài đặt đều cho kết quả tương tự nhau, chỉ khác về định dạng in ra.</p>
+<h1 id="4.-%E1%BB%A8ng-d%E1%BB%A5ng-QR-Decomposition">4. Ứng dụng QR Decomposition<a class="anchor-link" href="#4.-%E1%BB%A8ng-d%E1%BB%A5ng-QR-Decomposition">¶</a></h1><p>QR Decomposition là một phương pháp trong đại số tuyến tính để phân tích một ma trận thành tích của hai ma trận khác, một ma trận trực giao (Q) và một ma trận tam giác trên (R). QR Decomposition có nhiều ứng dụng quan trọng trong các lĩnh vực khác nhau, bao gồm:</p>
+<ul>
+<li><p><em>Giải hệ phương trình tuyến tính:</em> QR Decomposition có thể được sử dụng để giải hệ phương trình tuyến tính $Ax = b$. Thay vì giải trực tiếp, ta có thể phân tích $A$thành $A = QR$rồi giải hệ phương trình trong hai bước:</p>
+<ul>
+<li>Giải $Qy = b$ để tìm $y$(do $Q$là ma trận trực giao, giải pháp này đơn giản).</li>
+<li>Giải $Rx = y$ để tìm $x$ (do $R$ là ma trận tam giác trên, có thể giải bằng phương pháp thế ngược).</li>
+</ul>
+</li>
+<li><p><em>Phân tích thành phần chính (PCA):</em> QR Decomposition có thể được sử dụng trong PCA để phân tích dữ liệu thành các thành phần chính. Nó giúp giảm số chiều của dữ liệu bằng cách chuyển đổi dữ liệu vào một không gian mới sao cho phương sai của dữ liệu trong các chiều mới là tối đa.</p>
+</li>
+<li><p><em>Tối ưu hóa và phương pháp bình phương tối thiểu (Least Squares):</em> Trong các bài toán tối ưu hóa và hồi quy, QR Decomposition có thể được sử dụng để tìm nghiệm của bài toán bình phương tối thiểu, đặc biệt là khi giải các bài toán hồi quy tuyến tính. Nó giúp cải thiện độ ổn định số học so với phương pháp sử dụng nghịch đảo ma trận trực tiếp.</p>
+</li>
+<li><p><em>Phân tích giá trị riêng:</em> QR Decomposition là một phần của thuật toán QR để tìm các giá trị riêng và vector riêng của một ma trận. Thuật toán QR liên tiếp áp dụng QR Decomposition cho đến khi ma trận hội tụ đến một dạng tam giác.</p>
+</li>
+<li><p><em>Đồ thị và xử lý tín hiệu:</em> QR Decomposition có ứng dụng trong các lĩnh vực như xử lý tín hiệu và phân tích dữ liệu thời gian thực, nơi nó được sử dụng để phân tích các hệ thống động học và lọc tín hiệu.</p>
+</li>
+<li><p><em>Mô phỏng và mô hình hóa:</em> QR Decomposition được sử dụng trong mô phỏng và mô hình hóa các hệ thống tuyến tính, chẳng hạn như trong mô hình hoá hệ thống điều khiển và dự báo thời tiết.</p>
+</li>
+<li><p><em>Điều kiện hóa ma trận</em></p>
+</li>
+</ul>
+<p>Trong một số trường hợp, QR Decomposition có thể được sử dụng để cải thiện điều kiện của một ma trận trước khi áp dụng các thuật toán khác, giúp giảm lỗi tính toán và cải thiện độ chính xác của kết quả.</p>
+<p><strong>Kết luận:</strong>
+QR Decomposition là một công cụ mạnh mẽ và linh hoạt trong đại số tuyến tính với nhiều ứng dụng thực tế trong toán học, khoa học máy tính, kỹ thuật, và các lĩnh vực khoa học khác. Nó giúp giải quyết các bài toán phức tạp một cách hiệu quả và ổn định.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="5.-T%E1%BB%95ng-k%E1%BA%BFt">5. Tổng kết<a class="anchor-link" href="#5.-T%E1%BB%95ng-k%E1%BA%BFt">¶</a></h1><p>Trong đồ án này, em đã trình bày về giải thuật Gram-Schmidt và phân rã QR cùng với ứng dụng của phân rã QR. Em đã cài đặt giải thuật này bằng cả hai cách: không sử dụng thư viện và sử dụng thư viện <code>numpy</code>. Kết quả của cả hai cách cài đặt đều cho kết quả tương tự nhau, chỉ khác về định dạng in ra.</p>
 <ul>
 <li>Cài đặt không sử dụng thư viện giúp hiểu rõ hơn về cách hoạt động của giải thuật và cách thức thực hiện các phép toán trên ma trận và vector.</li>
 <li>Cài đặt sử dụng thư viện giúp giảm thời gian cài đặt và tối ưu hóa hiệu suất của chương trình.</li>
@@ -8275,7 +8309,7 @@ $$ A = QR $$<h3 id="2.2.2-Quy-tr%C3%ACnh">2.2.2 Quy trình<a class="anchor-link"
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="5.-T%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o">5. Tài liệu tham khảo<a class="anchor-link" href="#5.-T%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o">¶</a></h1><p>Trong quá trình thực hiện đồ án, em tham khảo một số tài liệu sau:</p>
+<h1 id="6.-T%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o">6. Tài liệu tham khảo<a class="anchor-link" href="#6.-T%C3%A0i-li%E1%BB%87u-tham-kh%E1%BA%A3o">¶</a></h1><p>Trong quá trình thực hiện đồ án, em tham khảo một số tài liệu sau:</p>
 <ol>
 <li>Slide bài giảng</li>
 <li><a href="https://numpy.org/doc/stable/">NumPy Documentation</a></li>

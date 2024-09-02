@@ -131,18 +131,26 @@ def format_solution(roots: list) -> list:
 
 def find_eigenvectors(matrix: Matrix, eigenvalues: list) -> list:
     eigenvectors: list[list] = []
+    print("Eigenvalues:", eigenvalues)
     for eigenvalue in eigenvalues:
-        # print("Với trị riêng:", eigenvalue)
+        print("Với trị riêng:", eigenvalue)
         temp: Matrix = matrix - get_identity_matrix(matrix.rows) * eigenvalue
         temp = temp.addColumn([0 for _ in range(temp.rows)])
-        # print("Matrix A - λI:")
-        # print(temp)
+        print("Matrix A - λI:")
+        print(temp)
         temp = Gauss_elimination(temp)
-        # print(temp)
+        print("Sau khi Gauss:\n", temp)
+        print("Ma trận tam giác trên:\n", temp)
+        print(temp)
         solutions: list[list] = back_substitution(temp)
+        print("Solutions:", solutions)
         # print("Solutions:", solutions)
-        if len(solutions) > 1:
+        if len(solutions) > 1 and len(solutions) <= matrix.rows:
             # Xóa các nghiệm không phải nghiệm tự do
+            if (type(solutions[0]) == float or type(solutions[0]) == int) and solutions[
+                0
+            ] == 0:
+                continue
             if solutions[0] == [0 for _ in range(len(solutions[0]))]:
                 solutions.pop(0)
             for vector in solutions:
@@ -165,16 +173,20 @@ def diagonalize_matrix(matrix: Matrix) -> tuple[Matrix, Matrix, Matrix, bool]:
 
 def main():
     matrices: list[Matrix] = [
-        Matrix([[-1, 3], [-2, 4]]),
-        Matrix([[5, 2], [9, 2]]),
-        Matrix([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
-        Matrix([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
-        Matrix([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
-        Matrix([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
-        Matrix([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
-        Matrix([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
-        Matrix([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
-        Matrix([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
+        # Matrix([[-1, 3], [-2, 4]]),
+        # Matrix([[5, 2], [9, 2]]),
+        # Matrix([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
+        # Matrix([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
+        # Matrix([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
+        # Matrix([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
+        # Matrix([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
+        # Matrix([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
+        # Matrix([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
+        # Matrix([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
+        # Matrix([[4.0, 0.8, 1.3], [1.2, 2.4, 3.5], [3.5, 4.6, 5.6]]),
+        # Matrix([[4.5, 4.5, 0], [4.5, 4.5, 0], [0, 0, 0]]),
+        # Matrix([[1.2, 2.3, 3.4], [2.3, 2.5, 3.6], [3.4, 3.6, 3.7]]),
+        Matrix([[2, 0, 12], [0, -38, -12], [12, -12, 48]])
     ]
 
     n = len(matrices)
@@ -197,40 +209,40 @@ def main():
         print(matrix_D)
         print("=" * 50)
 
-    matrices_np: list[np.ndarray] = [
-        np.array([[-1, 3], [-2, 4]]),
-        np.array([[5, 2], [9, 2]]),
-        np.array([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
-        np.array([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
-        np.array([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
-        np.array([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
-        np.array([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
-        np.array([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
-        np.array([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
-        np.array([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
-    ]
+    # matrices_np: list[np.ndarray] = [
+    #     np.array([[-1, 3], [-2, 4]]),
+    #     np.array([[5, 2], [9, 2]]),
+    #     np.array([[1, -1, -1], [1, 3, 1], [-3, 1, -1]]),
+    #     np.array([[5, -1, 1], [-1, 2, -2], [1, -2, 2]]),
+    #     np.array([[1, 3, 3], [-3, -5, -3], [3, 3, 1]]),
+    #     np.array([[4, 0, -1], [0, 3, 0], [1, 0, 2]]),
+    #     np.array([[3, 4, -4], [-2, -1, 2], [-2, 0, 1]]),
+    #     np.array([[0, 0, -2], [1, 2, 1], [1, 0, 3]]),
+    #     np.array([[1, 0, 0], [1, 2, 0], [-3, 5, 2]]),
+    #     np.array([[4, 0, 1], [-2, 1, 0], [-2, 0, 1]]),
+    # ]
 
-    n = len(matrices_np)
+    # n = len(matrices_np)
 
-    for i in range(n):
-        print(f"*** Ma trận câu", chr(ord("a") + i), ":")
-        print(matrices_np[i])
-        eigenvalues, eigenvectors = np.linalg.eig(matrices_np[i])
-        print("--> Trị riêng:")
-        print(eigenvalues)
-        print("--> Vector riêng:")
-        print(eigenvectors)
+    # for i in range(n):
+    #     print(f"*** Ma trận câu", chr(ord("a") + i), ":")
+    #     print(matrices_np[i])
+    #     eigenvalues, eigenvectors = np.linalg.eig(matrices_np[i])
+    #     print("--> Trị riêng:")
+    #     print(eigenvalues)
+    #     print("--> Vector riêng:")
+    #     print(eigenvectors)
 
-        D = np.diag(eigenvalues)
-        P = eigenvectors
-        P_inv = np.linalg.inv(P)
-        print("--> Ma trận P:")
-        print(P)
-        print("--> Ma trận P^-1:")
-        print(P_inv)
-        print("--> Ma trận D:")
-        print(D)
-        print("=" * 50)
+    #     D = np.diag(eigenvalues)
+    #     P = eigenvectors
+    #     P_inv = np.linalg.inv(P)
+    #     print("--> Ma trận P:")
+    #     print(P)
+    #     print("--> Ma trận P^-1:")
+    #     print(P_inv)
+    #     print("--> Ma trận D:")
+    #     print(D)
+    #     print("=" * 50)
 
 
 if __name__ == "__main__":

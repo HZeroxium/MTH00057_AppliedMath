@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "Final/Cau 1": true
+  },
+  "hide-files.files": [
+    "Final/Cau 1"
+  ],
+  "cSpell.words": [
+    "adjugate",
+    "Cofactor",
+    "cofactors",
+    "diagonalizable",
+    "linalg"
+  ]
+}
